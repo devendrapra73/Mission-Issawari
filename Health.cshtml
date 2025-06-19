@@ -1,0 +1,253 @@
+﻿
+@{
+    ViewBag.Title = "Health";
+    Layout = "~/Views/Shared/programLayout.cshtml";
+}
+<style>
+    :root {
+        --primary: #e83e8c;
+        --secondary: #6f42c1;
+        --light: #f8f9fa;
+        --dark: #343a40;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .hero {
+        background: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+        background-size: cover;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        position: relative;
+    }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+    .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        color: white;
+        z-index: 1;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 20px;
+    }
+
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 2rem 0;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+    .card-header {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 15px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .btn {
+        display: inline-block;
+        background: var(--primary);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 10px;
+        transition: background 0.3s;
+    }
+
+        .btn:hover {
+            background: #d6337a;
+        }
+
+    .telemedicine-section {
+        background: #f0f8ff;
+        padding: 2rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+    }
+</style>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Empowering Women Through Health & Wellness</h1>
+        <p>Access government health facilities, menstrual health resources, and telemedicine services all in one place.</p>
+        <a href="#schemes" class="btn">Explore Services</a>
+    </div>
+</section>
+
+<div class="container">
+    <section id="schemes">
+        <h2>Government Health Schemes for Women</h2>
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Pradhan Mantri Matru Vandana Yojana (PMMVY)</h3>
+                </div>
+                <div class="card-body">
+                    <p>Cash incentive of ₹5,000 for pregnant women and lactating mothers for their first living child.</p>
+                    <a href="#" class="btn">Apply Now</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Janani Suraksha Yojana (JSY)</h3>
+                </div>
+                <div class="card-body">
+                    <p>Cash assistance for institutional deliveries to reduce maternal and neonatal mortality.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Ayushman Bharat - PMJAY</h3>
+                </div>
+                <div class="card-body">
+                    <p>Health coverage of ₹5 lakh per family per year for secondary and tertiary care hospitalization.</p>
+                    <a href="#" class="btn">Check Eligibility</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Poshan Abhiyaan</h3>
+                </div>
+                <div class="card-body">
+                    <p>Nutrition mission to improve nutritional outcomes for pregnant women, lactating mothers and children.</p>
+                    <a href="#" class="btn">Get Benefits</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="menstrual">
+        <h2>Menstrual Health Initiatives</h2>
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header">
+                    <h3>SUVIDHA Sanitary Napkins</h3>
+                </div>
+                <div class="card-body">
+                    <p>Oxo-biodegradable sanitary napkins available at ₹1 per pad at Jan Aushadhi Kendras.</p>
+                    <a href="#" class="btn">Find Nearby Center</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Menstrual Health Education</h3>
+                </div>
+                <div class="card-body">
+                    <p>Educational resources and workshops on menstrual hygiene management.</p>
+                    <a href="#" class="btn">Access Resources</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Free Napkin Vending Machines</h3>
+                </div>
+                <div class="card-body">
+                    <p>Installed in government schools and colleges across the country.</p>
+                    <a href="#" class="btn">Locate Machines</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="telemedicine" class="telemedicine-section">
+        <h2>Telemedicine Services</h2>
+        <p>Access qualified doctors from the comfort of your home through these government-approved telemedicine platforms:</p>
+
+        <div class="card-container">
+            <div class="card">
+                <div class="card-header">
+                    <h3>eSanjeevani</h3>
+                </div>
+                <div class="card-body">
+                    <p>Government's free telemedicine service providing OPD consultations.</p>
+                    <a href="#" class="btn">Start Consultation</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>National Telemedicine Service</h3>
+                </div>
+                <div class="card-body">
+                    <p>24/7 access to specialists including gynecologists.</p>
+                    <a href="#" class="btn">Connect Now</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Mobile Health Units</h3>
+                </div>
+                <div class="card-body">
+                    <p>Schedule video consultations with mobile health units in rural areas.</p>
+                    <a href="#" class="btn">Book Appointment</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="card">
+            <div class="card-body">
+                <h3>How do I apply for PMMVY benefits?</h3>
+                <p>You can apply at your nearest Anganwadi center or through the PMMVY portal with required documents including your Aadhaar card, bank account details, and pregnancy certificate.</p>
+
+                <h3>Where can I find free sanitary napkins?</h3>
+                <p>Free sanitary napkins are available at government schools, colleges, and Jan Aushadhi Kendras. SUVIDHA napkins are also available at ₹1 per pad.</p>
+
+                <h3>Is telemedicine service free?</h3>
+                <p>Yes, government-run telemedicine services like eSanjeevani are completely free of cost.</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+

@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "AdminLogin";
+    Layout = "~/Views/Shared/PageLayout.cshtml";
+}
+
+<style>
+        /* Login Section */
+        .login-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                            url("https://images.unsplash.com/photo-1498050108023-c5249f4df085");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 5px;
+            position: relative;
+        }
+
+        .login-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            backdrop-filter: blur(8px);
+        }
+
+        .login-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-form h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            text-align: left;
+            font-size: 20px;
+            color: #34495e;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 400px;
+            padding: 0.875rem 1.25rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            transition: border-color 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+        }
+
+        .form-group button[type="submit"] {
+            width: 100%;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: #fff;
+            border: none;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .form-group button[type="submit"]:hover {
+            filter: brightness(1.1);
+        }
+
+        .form-footer {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-footer a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .form-footer a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .show-pass {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .show-pass label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @@media (max-width: 480px) {
+            .login-form {
+                padding: 1.5rem;
+            }
+
+            .login-form h2 {
+                font-size: 1.75rem;
+            }
+        }
+</style>
+
+    <!-- Login Section -->
+    <div class="login-section">
+        <div class="login-form">
+            <h2>Admin Login</h2>
+            <form action="/Home/AdminLogin" method="post" autocomplete="off">
+                <div class="form-group">
+                    <label for="adminId">Admin ID</label>
+                    <input type="text"
+                           id="adminId"
+                           name="SAusername"
+                           required
+                           placeholder="Enter admin ID"
+                           autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password"
+                           id="password"
+                           name="Password"
+                           required
+                           placeholder="Enter admin password"
+                           autocomplete="off">
+                </div>
+                <div class="show-pass">
+                    <label>
+                        <input type="checkbox" id="showPassword">
+                        <span>Show Password</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Login</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Better password visibility toggle
+        document.getElementById('showPassword').addEventListener('change', function(e) {
+            const passwordField = document.getElementById('password');
+            passwordField.type = e.target.checked ? 'text' : 'password';
+        });
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const inputs = Array.from(this.elements).filter(el => el.tagName === 'INPUT');
+            if (inputs.some(input => input.value.trim() === '')) {
+                e.preventDefault();
+                alert('Please fill in all required fields');
+            }
+        });
+    </script>
+

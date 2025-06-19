@@ -1,0 +1,118 @@
+﻿
+@model missFinal.ViewModels.TrainingViewModel
+
+@{
+    ViewBag.Title = "Training";
+    Layout = "~/Views/Shared/PageLayout.cshtml";
+}
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="display-4 fw-bold mb-4">Empowering Rural Women of India</h1>
+        <p class="lead mb-4">Access government schemes, skill training, health resources and financial tools in your language</p>
+    </div>
+</section>
+
+<!-- Government Schemes Section -->
+<section id="schemes" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Government Schemes for You</h2>
+            <p class="lead text-muted">Find benefits you're eligible for</p>
+        </div>
+
+        <div class="row g-4">
+            @foreach (var item in Model.GovSchemes)
+            {
+                <div class="col-md-4">
+                    <div class="card feature-card scheme-card h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-primary bg-opacity-10 p-2 rounded me-3">
+                                    <i class="fas fa-rupee-sign text-primary fs-4"></i>
+                                </div>
+                                <h5 class="mb-0">@item.Schemetitle</h5>
+                            </div>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>@item.Schemename1</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>@item.Schemename2</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>@item.Schemename3</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="text-center mt-4">
+            @*<a href="/Home/Eligibility" class="btn btn-primary">*@
+            <a href="/Home/Scheme" class="btn btn-sm btn-outline-primary">View All</a>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Health & Wellness -->
+<section id="health" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Health & Wellness</h2>
+            <p class="lead text-muted">Your right to healthy living</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-pink bg-opacity-10 p-2 rounded me-3">
+                                <i class="fas fa-female text-pink fs-4"></i>
+                            </div>
+                            <h5 class="mb-0">Menstrual Health</h5>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Low-cost sanitary pads</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Hygiene education</li>
+                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Incinerator installation</li>
+                        </ul>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-primary"> <a href="/Home/Health" style="text-decoration:none"> View </a> </button>
+                            <button class="btn btn-sm btn-outline-success">
+                                <i class="fas fa-map-marker-alt me-1"></i> Find Centers
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info bg-opacity-10 p-2 rounded me-3">
+                                <i class="fas fa-stethoscope text-info fs-4"></i>
+                            </div>
+                            <h5 class="mb-0">Telemedicine Services</h5>
+                        </div>
+                        <p>Free online doctor consultations in your language</p>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-primary">
+                                <i class="fas fa-phone-alt me-1"></i> eSanjeevani
+                            </button>
+                            <button class="btn btn-sm btn-success">
+                                <a href="https://www.digitalindia.gov.in/initiative/aarogya-setu/" style="text-decoration:auto"> <i class="fas fa-mobile-alt me-1"></i> Aarogya Setu</a>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+       
+   
+
+

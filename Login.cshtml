@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/PageLayout.cshtml";
+}
+
+<!-- Login Section with Background Image and Blur Effect -->
+<div class="login-section">
+    <div class="login-form">
+        <h2>Login Here</h2>
+        @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+        {
+            <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+        }
+        <form action="/Home/Login" method="post">
+            <div class="form-group">
+                <label for="phno">Contact No.</label>
+                <input type="tel" id="phno" name="Mobile" pattern="\d{10}" required placeholder="Enter your Contact No." title="Enter a valid 10-digit phone number">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="Password" required placeholder="Enter your password">
+            </div>
+            <div class="show-pass">
+                <input type="checkbox" onclick="ShowPassword()" /> Show Password
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Login">
+            </div>
+            <div class="form-footer">
+                <p>Don't have an account? <a href="/Home/Registration">Register Here</a></p>
+                <p><a href="/Home/ForgotPassword">Forgot Password?</a></p>
+            </div>
+        </form>
+        <script>
+    function ShowPassword() {
+                var x = document.getElementById("password");
+                if (x.type == "password") {
+                    x.type = "text";
+                }
+                else {
+                    x.type = "password";
+                }
+            }</script>
+    </div>
+</div>
+
