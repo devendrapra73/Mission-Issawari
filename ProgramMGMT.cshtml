@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "ProgramMGMT";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+}
+<form action="/SuperAdmin/ProgramMGMT" method="post" enctype="multipart/form-data">
+    <label for="Pro_Title">News Title</label>
+    <input type="text" name="Pro_Title" id="Pro_Title" placeholder="News Title" required /><br /><br />
+
+    <label for="Pro_Des">News Description</label>
+    <input type="text" name="Pro_Des" id="Pro_Des" placeholder="News Description" required /><br /><br />
+
+    <label for="Pro_Pic">News Image</label>
+    <input type="file" name="Pro_Pic" id="Pro_Pic" required /><br /><br />
+
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+

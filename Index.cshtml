@@ -1,266 +1,153 @@
-﻿
+﻿@model List<missFinal.Models.tbl_complaint>
+
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/HomeLayout.cshtml";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
 }
 
+
+<!-- View My Complaints Button -->
+<a href="javascript:void(0);" class="btn btn-primary" id="btnViewComplaints">
+    <span id="btnText">View My Complaints</span>
+    <span id="btnLoader" style="display:none;" class="spinner-border spinner-border-sm"></span>
+</a>
+
+<!-- Complaints Section (Initially Hidden) -->
+<div id="complaintsSection" style="display: none;">
+    <h2>My Complaints</h2>
+    <div id="complaintsContainer">
+        <!-- Complaint List Will Be Loaded Here -->
+    </div>
+</div>
+
+<!-- Complaint Form Guide -->
+<div class="complaint-container">
+    <h3>Complaint Form Guide</h3>
+    <p><strong>English:</strong> Please read the instructions carefully before filing a complaint. Choose whether you want to track your complaint or file a new one.</p>
+    <p><strong>हिंदी:</strong> कृपया शिकायत दर्ज करने से पहले निर्देशों को ध्यान से पढ़ें। चुनें कि आप अपनी शिकायत की स्थिति ट्रैक करना चाहते हैं या एक नई शिकायत दर्ज करना चाहते हैं।</p>
+
+    <div class="btn-container">
+        <a href="@Url.Action("TrackComplaint", "User")" class="btn btn-primary">Track Complaint</a>
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#complaintModal">File a Complaint</button>
+    </div>
+</div>
+
+<!-- 🚀 Complaint Form Modal -->
+<div class="modal fade" id="complaintModal" tabindex="-1" aria-labelledby="complaintModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="complaintModalLabel">File a Complaint</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="@Url.Action("Index", "User")" method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input type="text" name="Full_Name" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Complaint Type</label>
+                        <select name="Complaint_Type" class="form-control" required>
+                            <option value="">Select Complaint Type</option>
+                            @if (ViewBag.ComplaintTypes != null)
+                            {
+                                foreach (var item in ViewBag.ComplaintTypes as List<SelectListItem>)
+                                {
+                                    <option value="@item.Value">@item.Text</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Complaint Description</label>
+                        <textarea name="Complaint_Desp" class="form-control" rows="3" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Location</label>
+                        <input type="text" name="U_Location" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Upload Evidence</label>
+                        <input type="file" name="imgfile" class="form-control" />
+                    </div>
+
+                    <!-- 🛑 Submit Complaint Button Inside Modal -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit Complaint</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ✅ Include jQuery & Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- ✅ Include Bootstrap JS (if not already included) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    $.ajax({
-        url: "/Home/GetStatistics",
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            let totalComplaints = data.TotalComplaintsFiled || 0;
-            let resolved = data.CasesResolved || 0;
-            let ongoing = data.OngoingCases || 0;
+$(document).ready(function () {
+    let isVisible = false;
 
-            let pendingCases = totalComplaints - resolved - ongoing;
-            if (pendingCases < 0) pendingCases = 0;
+    $("#btnViewComplaints").click(function () {
+        if (!isVisible) {
+            // Load only if not already visible
+            $.ajax({
+                url: "@Url.Action("GetMyComplaints", "User")", // Your Controller Action
+                type: "GET",
+                success: function (data) {
+                $("#complaintsContainer").html(data); // Fill the container
+                $("#complaintsSection").slideDown();   // Show with animation
+                $("#btnViewComplaints").text("Hide My Complaints"); // Change button text
+                isVisible = true;
+                },
+                error: function (xhr) {
+                alert("Error loading complaints: " + xhr.responseText);
+                }
+                });
+                } else {
+                $("#complaintsSection").slideUp(); // Hide complaints
+                $("#btnViewComplaints").text("View My Complaints"); // Reset button
+                isVisible = false;
+                }
+                });
+                });
 
-            $("#complaints-value").text(totalComplaints);
-            $("#cases-value").text(resolved);
-            $("#pending-value").text(pendingCases);
-        },
-        error: function (xhr) {
-            console.error("Error fetching data:", xhr.responseText);
-            alert("Error fetching statistics data!");
+
+</script>
+<script>
+    $(document).ready(function () {
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '@TempData["SuccessMessage"]',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+            </text>
         }
     });
 </script>
-
-<!-- Hero Section -->
-<section class="hero-section">
-    <div id="heroCarousel" class="carousel slide h-100" data-bs-ride="carousel">
-        <div class="carousel-inner h-100">
-            <div class="carousel-item active h-100">
-                <img src="https://i.pinimg.com/736x/d8/b6/cc/d8b6cc50dfe7e15e5778c8a970fc38fc.jpg" class="d-block w-100 h-100" alt="Empowered Women" style="object-fit: cover;">
-            </div>
-            <div class="carousel-item h-100">
-                <img src="https://idronline.org/wp-content/uploads/2020/12/Photo-Sudarshan-Pradan1-scaled.jpg.webp" class="d-block w-100 h-100" alt="Women Education" style="object-fit: cover;">
-            </div>
-            <div class="carousel-item h-100">
-                <img src="https://t4.ftcdn.net/jpg/10/62/28/63/360_F_1062286346_KEre2UFJtKc5QGKwOP3e2cuVBvj1I1Vs.jpg" class="d-block w-100 h-100" alt="Women Rights" style="object-fit: cover;">
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Mission & Values Section -->
-<section class="mission-section py-5">
-    <div class="container">
-        <h2 class="section-title translatable" data-en="Our Mission & Values" data-hi="हमारा मिशन और मूल्य">Our Mission & Values</h2>
-
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="mission-card">
-                    <div class="mission-icon">
-                        <i class="fas fa-fist-raised"></i>
-                    </div>
-                    <h4 class="translatable">Empowerment</h4>
-                    <p class="translatable">
-                        We believe in empowering women through education, skills, and financial independence to create lasting change.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="mission-card">
-                    <div class="mission-icon">
-                        <i class="fas fa-balance-scale"></i>
-                    </div>
-                    <h4 class="translatable">Justice</h4>
-                    <p class="translatable">
-                        We provide legal support and advocacy to ensure women's rights are protected and justice is accessible to all.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="mission-card">
-                    <div class="mission-icon">
-                        <i class="fas fa-hands-helping"></i>
-                    </div>
-                    <h4 class="translatable">Community</h4>
-                    <p class="translatable">
-                        We build strong support networks and self-help groups to foster solidarity and collective growth.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Latest news Section -->
-<section class="news-section py-5">
-    <div class="container">
-        <h2 class="section-title translatable">Latest News</h2>
-
-        <p class="text-center lead text-muted">Latest news related to women's crime and empowerment for their awareness.</p>
-
-        <div class="text-center mt-5">
-            <a href="/Home/Course" class="btn btn-outline-primary btn-lg translatable">Read all latest News</a>
-        </div>
-    </div>
-</section>
-
-
-<!-- Rights Section -->
-<section class="rights-section py-5">
-    <div class="container">
-        <h2 class="section-title translatable">Know Your Rights</h2>
-
-        <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="rights-card">
-                    <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="rights-img w-100" alt="Dowry Prohibition Act">
-                    <div class="card-body">
-                        <h5 class="card-title translatable" style="padding:20px 10px">Dowry Prohibition Act, 1961</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="rights-card">
-                    <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="rights-img w-100" alt="Sexual Harassment Act">
-                    <div class="card-body">
-                        <h5 class="card-title translatable" style="padding:20px 10px">Sexual Harassment at Workplace Act, 2013</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-4">
-                <div class="rights-card">
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="rights-img w-100" alt="Right to Education">
-                    <div class="card-body">
-                        <h5 class="card-title translatable" style="padding:20px 10px">Right to Education Act, 2009</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="text-center mt-5">
-            <a href="/Home/Resources" class="btn btn-outline-primary btn-lg translatable">View All Government Resouorces</a>
-        </div>
-    </div>
-</section>
-
-
-<!-- Impact Section -->
-<section class="impact-section py-5">
-    <div class="container">
-        <h2 class="section-title text-center mb-5">Our Impact</h2>
-        <div class="row g-4">
-
-            <div class="col-md-4">
-                <div class="impact-card text-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2784/2784487.png" class="impact-img mb-2" />
-                    <div class="counter h4" id="complaints-value">0</div>
-                    <h5>Total Complaints</h5>
-                    <p>Through our various empowerment programs</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="impact-card text-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3564/3564639.png" class="impact-img mb-2" />
-                    <div class="counter h4" id="cases-value">0</div>
-                    <h5>Cases Resolved</h5>
-                    <p>Legal support and justice served</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="impact-card text-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" class="impact-img mb-2" />
-                    <div class="counter h4" id="pending-value">0</div>
-                    <h5>Pending Complaints</h5>
-                    <p>Currently under review</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-
-<!-- Success Stories Section -->
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#fd").click(function () {
-            $("#fed").slideToggle(2000);
-        })
-    })
-</script>
-
-<!-- Story Start -->
-<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
-    <div class="container py-5">
-        <div class="text-center">
-            <h2 class="section-title">Success Stories</h2>
-            <br />
-            
-        <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-            @if (Model != null)
-            {
-                foreach (var x in Model.Stories)
-                {
-                    <div class="testimonial-item p-4 my-5">
-                        <i class="fa fa-quote-right fa-3x text-light position-absolute top-0 end-0 mt-n3 me-4"></i>
-                        <div class="d-flex align-items-end mb-4">
-                            <div class="ms-4" style="background-color: floralwhite; border-bottom: 3px solid pink; ">
-                                <h5 class="mb-1">@x.Name</h5>
-                                <p class="m-0">@x.Story</p>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-            else
-            {
-                <div class="testimonial-item p-4 my-5">
-                    <p>No Story available at the moment.</p>
-                </div>
-            }
-        </div>
-
-        <!-- Add Owl Carousel Script -->
-
-        <script>
-            $(document).ready(function () {
-                $(".testimonial-carousel").owlCarousel({
-                    items: 1,
-                    loop: true,
-                    autoplay: true,
-                    autoplayTimeout: 5000,
-                    autoplayHoverPause: true,
-                    nav: true,
-                    dots: true,
-                    responsive: {
-                        0: { items: 1 },
-                        768: { items: 2 },
-                        1024: { items: 3 }
-                    }
-                });
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '@TempData["ErrorMessage"]',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Close'
             });
-        </script>
-
-    </div>
-</div>
-<!-- Story End -->
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/2.3.4/owl.carousel.min.js"></script>
+        });
+    </script>
+}

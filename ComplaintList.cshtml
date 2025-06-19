@@ -1,0 +1,188 @@
+﻿@model List<missFinal.Models.tbl_complaint>
+
+@{
+    ViewBag.Title = "ComplaintList";
+    Layout = "~/Views/Shared/Admin_Layout.cshtml";
+
+    // Complaint Type list from controller
+    var complaintTypes = ViewBag.ComplaintTypes as List<missFinal.Models.tbl_complaint_type>;
+    var departments = ViewBag.Department as List<missFinal.Models.Department>;
+}
+
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="container-fluid justify-content-center">
+    <div class="col-lg-12 grid-margin stretch-card" style="margin-top">
+        @*<div class="card">
+            <div class="card-body">*@
+        <h4 class="card-title" style="margin:20px">Complaints List</h4>
+        <div class="table-responsive">
+            @if (Model != null && Model.Any())
+            {
+                <table class="table table-bordered" id="example" style=" white-space: nowrap; ">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Complaint No</th>
+                            <th>Name</th>
+                            <th>Type</th> <!-- Type name will show here -->
+                            <th>Description</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Evidence</th>
+                            <th>Created At</th>
+                            <th>Emergency</th>
+                            <th>Actions</th>
+                            <th>Send</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var complaint in Model)
+                        {
+                            <tr class="@(complaint.IsEmergency == true ? "table-danger" : "")">
+                                <td>@complaint.Complaint_no</td>
+                                <td>@complaint.Full_Name</td>
+                                <td>
+                                    @{
+                                        var typeId = 0;
+                                        int.TryParse(complaint.Complaint_Type, out typeId);
+                                        var typeName = complaintTypes.FirstOrDefault(ct => ct.type_id == typeId)?.type_name ?? "Unknown";
+                                    }
+                                    @typeName
+                                </td>
+                                <td>@complaint.Complaint_Desp</td>
+                                <td>@complaint.U_Location</td>
+
+                                <td>
+                                    <span class="badge @(complaint.Status == "Resolved" ? "bg-success" : "bg-warning")">
+                                        @complaint.Status
+                                    </span>
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(complaint.Evidence))
+                                    {
+                                        <a href="@complaint.Evidence" target="_blank" class="btn btn-sm btn-primary">View</a>
+                                    }
+                                    else
+                                    {
+                                        <span>No Evidence</span>
+                                    }
+                                </td>
+                                <td>@(complaint.CreatedAt.HasValue ? complaint.CreatedAt.Value.ToString("dd-MMM-yyyy") : "N/A")</td>
+                                <td>
+                                    @if (complaint.IsEmergency == true)
+                                    {
+                                        <span class="badge bg-danger">🔥 Emergency</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Normal</span>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("UpdateStatus", "SuperAdmin", new { id = complaint.c_id })" class="btn btn-sm btn-success">
+                                        Mark Resolved
+                                    </a>
+                                </td>
+                                <td style="display: flex; gap: 5px; align-items: center;">
+                                    <select class="form-control dept-select" data-id="@complaint.c_id" style="flex: 1;">
+                                        <option value="">--Select Department--</option>
+                                        @foreach (var dept in departments)
+                                        {
+                                            <option value="@dept.DepartmentID">@dept.DepartmentName</option>
+                                        }
+                                    </select>
+                                    <button type="button" class="btn btn-sm btn-success send-btn" data-id="@complaint.c_id">
+                                        Send
+                                    </button>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="alert alert-info">No complaints found.</p>
+            }
+        </div>
+        @*</div>
+            </div>*@
+    </div>
+</div>
+
+
+<script>
+    $(".send-btn").click(function () {
+        var $button = $(this); // Store button reference
+        var complaintId = $button.data("id");
+        var $select = $button.siblings("select");
+        var departmentId = $select.val();
+        var departmentName = $select.find("option:selected").text();
+        var status = $button.data("status");
+        var isEmergency = $button.data("emergency");
+
+        if (!departmentId) {
+            alert("Please select a department first.");
+            return;
+        }
+
+        // Disable elements during AJAX call to prevent duplicate submissions
+        $button.prop("disabled", true);
+        $select.prop("disabled", true);
+
+        $.ajax({
+            url: '/SuperAdmin/SendComplaint',
+            method: 'POST',
+            data: {
+                complaintId: complaintId,
+                departmentId: departmentId
+            },
+            success: function (response) {
+                // Update button text immediately
+                $button.text("Sent to " + departmentName);
+                $button.removeClass("btn-success").addClass("btn-secondary");
+
+                // Check if the complaint is an emergency and not resolved
+                if (isEmergency && status !== "Resolved") {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Emergency Complaint Not Resolved',
+                        text: 'This complaint is an emergency and has not been resolved yet.'
+                    });
+                } else {
+                    // If the complaint is resolved or not an emergency, show success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Complaint Sent',
+                        text: response.message
+                    });
+                }
+            },
+            error: function () {
+                // Re-enable elements on error
+                $button.prop("disabled", false);
+                $select.prop("disabled", false);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'An error occurred while sending the complaint.'
+                });
+            }
+        });
+    });
+</script>
+
+<!-- DataTable Init -->
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>

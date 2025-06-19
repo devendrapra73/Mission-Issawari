@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "SuccessStories";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#fd").click(function () {
+            $("#fed").slideToggle(2000);
+        })
+    })
+</script>
+<div class="text-center">
+    <h2 class="section-title">Success Stories</h2>
+    <br />
+    <button type="button" class="btn btn-primary btn-lg" id="fd">
+        Share Success Story
+    </button>
+
+    <div class="row">
+        <br />
+        <br />
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4" style="padding:2%;border:2px solid orange;display:none" id="fed">
+            <form action="/User/SuccessStories" method="post">
+                Name
+                <input type="text" name="Name" class="form-control" required placeholder="Name" />
+                Location
+                <input type="text" name="Location" class="form-control" placeholder="Location" required />
+                Write Your Story
+                <textarea name="Story" maxlength="100" placeholder="Write almost 2 or 3 lines" class="form-control" required></textarea>
+                <br />
+                Email
+                <input type="email" name="Email" class="form-control" placeholder="Email" />
+                <button class="btn btn-success">Submit</button>
+            </form>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+    <br />
+
+</div>
+
+

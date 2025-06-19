@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "DepartmentMgmt";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<br /><br />
+<!-- Resources Section with Background Image and Blur Effect -->
+<div class="registration-section" style="height:auto;display:flex;justify-content:center">
+    <div class="registration-form">
+        <h2>Add Department Here Here</h2>
+        <form action="/SuperAdmin/DepartmentMgmt" method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="DepartmentName" required placeholder="Department Name">
+            </div>
+            <div class="form-group">
+                <label for="resource">Location</label>
+                <input type="text" id="resource" name="Location" required placeholder="Enter Office Address">
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Add">
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<br /><br />
+

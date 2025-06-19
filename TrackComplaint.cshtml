@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "TrackComplaint";
+    Layout = "~/Views/Shared/User_Layout.cshtml";
+}
+
+<br />
+<br />
+<h2>Track Your Complaint</h2>
+
+<form action="/User/TrackComplaint" method="post">
+    <label>Enter Complaint Number:</label>
+    <input type="text" name="complaintNo" class="form-control" required />
+    <button type="submit" class="btn btn-primary mt-2">Track Complaint</button>
+    <a href="/User/Index" class="btn btn-info mt-2">Back</a>
+</form>
+
+<br />
+<br />
+
+@if (ViewBag.ComplaintDetails != null)
+{
+    <h3>Complaint Details:</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th>Complaint No</th>
+            <td>@ViewBag.ComplaintDetails.Complaint_no</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>@ViewBag.ComplaintDetails.Full_Name</td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>@ViewBag.ComplaintDetails.Complaint_Type</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>@ViewBag.ComplaintDetails.Complaint_Desp</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>@ViewBag.ComplaintDetails.U_Location</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>@ViewBag.ComplaintDetails.Status</td>
+        </tr>
+        <tr>
+            <th>Evidence</th>
+            <td>
+                @if (!string.IsNullOrEmpty(ViewBag.ComplaintDetails.Evidence))
+                {
+                    <img src="@Url.Content(ViewBag.ComplaintDetails.Evidence)" width="100" />
+                }
+                else
+                {
+                    <span>No evidence uploaded</span>
+                }
+            </td>
+        </tr>
+    </table>
+}
+else if (ViewBag.ErrorMessage != null)
+{
+    <p class="text-danger">@ViewBag.ErrorMessage</p>
+}
+
+
+
+
