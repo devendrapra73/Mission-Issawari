@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/Home/CSS/homeBody.css" rel="stylesheet" />
+    <link href="~/Content/Home/CSS/navStyle.css" rel="stylesheet" />
+    <link href="~/Content/Home/CSS/successStory.css" rel="stylesheet" />
+    <title>MISS - Women Empowerment and Security</title>
+    <link rel="icon" href="favicon.ico" />
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" rel="stylesheet" />
+    <style>
+        #google_translate_element {
+            font-size: 16px;
+        }
+
+        /* Hide Google branding */
+        .goog-logo-link,
+        .goog-te-gadget span {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+        }
+
+        /* Show only the select box (language dropdown) */
+        .goog-te-combo {
+            color: #000;
+            font-weight: 500;
+            border: 1px solid #ccc;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="top-links">
+                <div id="google_translate_element"></div>
+
+                <a href="#">Contact Us</a>
+            </div>
+            <div class="accessibility-controls">
+                <button class="accessibility-btn" onclick="decreaseFontSize()">A-</button>
+                <span>A</span>
+                <button class="accessibility-btn" onclick="increaseFontSize()">A+</button>
+            </div>
+        </div>
+    </div>
+    <!-- Sanskrit Quote Section -->
+    <section class="quote-section">
+        <div class="container">
+            <div class="sanskrit-quote">"यत्र नार्यस्तु पूज्यन्ते रमन्ते तत्र देवताः। यत्र नार्यो ना पूज्यन्ते सर्वास्तत्र अफलक्रियाः"</div>
+            <div class="translation translatable"
+                 data-en="Where women are respected, the gods rejoice there. Where they are not respected, all work becomes futile."
+                 data-hi="जहां स्त्रियों का आदर होता है, वहां देवता रमण करते हैं। जहां उनका आदर नहीं होती, वहां सब काम निष्फल होते हैं।">
+                Where women are respected, the gods rejoice there. Where they are not respected, all work becomes futile.
+            </div>
+        </div>
+    </section>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-container" >
+                @*<img src="https://thumbs.dreamstime.com/b/women-empowerment-logo-design-women-empowerment-logo-design-vector-322915491.jpg" alt="Women Empowerment Logo" class="logo">*@
+                <img src="https://static.vecteezy.com/system/resources/previews/006/378/571/non_2x/miss-word-on-isolated-button-free-photo.jpg" alt="MISS Logo" class="miss-logo"  >
+                <div class="org-details">
+                    <div class="org-name">MISS • Mission for Independent Strong Sisters </div>
+                    <div class="org-dept">Government of India</div>
+                </div>
+            </div>
+            <img src="https://th.bing.com/th/id/R.6ce89f54a3bc21f09551dfa78b41a8c9?rik=iERPQRwePdubmQ&riu=http%3a%2f%2ftruthultimate.com%2fwp-content%2fuploads%2f2021%2f09%2fSatyamev-Jayate-Logo.png&ehk=Td%2f1dRJ%2bA7BV4e0OGbkNgUX8G7ljW7z%2flbi1A1uvqFM%3d&risl=&pid=ImgRaw&r=0" alt="Satyamev Jayate Logo" class="right-logo">
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+            <div class="nav-container">
+                <button class="mobile-menu-btn">☰</button>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="/Home/Index" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="/Home/Resources" class="nav-link">Resources</a></li>
+                    <li class="nav-item"><a href="/Home/Training" class="nav-link">Know more about Government schemes</a></li>
+                    <li class="nav-item">
+                        <a href="/Home/Login" class="btn btn-danger btn-lg px-4">
+                            <i class="fas fa-exclamation-triangle me-2"></i>File Complaint
+                        </a>
+                    </li>
+                    <li class="nav-item"><a href="/Home/Registration" class="nav-link">Registration</a></li>
+                </ul>
+            </div>
+        </nav>
+
+
+
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer class="footer" style="width:100%">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">MISS</div>
+                    <p class="translatable" data-en="Mission for Independent Strong Sisters - Empowering women through education, legal support, and community development."
+                       data-hi="मिशन ईश्वरीय सशक्तिकरण - शिक्षा, कानूनी सहायता और सामुदायिक विकास के माध्यम से महिलाओं को सशक्त बनाना।">
+                        Mission for Independent Strong Sisters - Empowering women through education, legal support, and community development.
+                    </p>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-links">
+                        <h5 class="translatable" data-en="Quick Links" data-hi="त्वरित लिंक">Quick Links</h5>
+                        <ul>
+                            <li><a href="/Home/Index" class="translatable" data-en="Home" data-hi="मुख्य पृष्ठ">Home</a></li>
+                            <li><a href="/Home/Resources" class="translatable" data-en="Resources" data-hi="संसाधन">Resources</a></li>
+                            <li><a href="/Home/Training" class="translatable" data-en="Training" data-hi="प्रशिक्षण">Training</a></li>
+                            <li><a href="/Home/Login" class="translatable" data-en="Complaints" data-hi="शिकायतें">Complaints</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="footer-links">
+                        <h5 class="translatable" data-en="Legal" data-hi="कानूनी">Legal</h5>
+                        <ul>
+                            <li><a href="#" class="translatable" data-en="Privacy Policy" data-hi="गोपनीयता नीति">Privacy Policy</a></li>
+                            <li><a href="#" class="translatable" data-en="Terms of Service" data-hi="सेवा की शर्तें">Terms of Service</a></li>
+                            <li><a href="#" class="translatable" data-en="Disclaimer" data-hi="अस्वीकरण">Disclaimer</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="footer-links">
+                        <h5 class="translatable" data-en="Contact Us" data-hi="संपर्क करें">Contact Us</h5>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> Lucknow, India</li>
+                            <li><i class="fas fa-phone-alt me-2"></i> +91 98765 43210</li>
+                            <li><i class="fas fa-envelope me-2"></i> contact@miss.org.in</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright text-center">
+                <p class="mb-0 translatable" data-en="&copy; 2025 MISS - Mission for Independent Strong Sisters. All Rights Reserved."
+                   data-hi="&copy; 2025 MISS सर्वाधिकार सुरक्षित।">
+                    &copy; 2025 MISS - Mission for Independent Strong Sisters. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {
+                    pageLanguage: 'en',
+                    includedLanguages: 'en,hi',
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                },
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+   
+</body>
+</html>
